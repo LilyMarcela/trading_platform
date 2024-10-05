@@ -1,12 +1,18 @@
 <!-- trading/templates/trading/create_strategy.html -->
 
 {% extends "base_generic.html" %} {% block content %}
-<div class="container">
-  <h2>Create a New Strategy</h2>
-  <form method="POST">
-    {% csrf_token %} {{ form.as_p }}
-    <!-- Render the form fields -->
-    <button type="submit" class="btn btn-primary">Create Strategy</button>
-  </form>
-</div>
+<h2>Create New Strategy</h2>
+<form method="post">
+  {% csrf_token %}
+  <label for="id_name">Name</label>
+  <input type="text" name="name" id="id_name" />
+
+  <label for="id_short_window">Short Window</label>
+  <input type="number" name="short_window" id="id_short_window" />
+
+  <label for="id_long_window">Long Window</label>
+  <input type="number" name="long_window" id="id_long_window" />
+
+  <button type="submit" class="btn btn-primary">Create Strategy</button>
+</form>
 {% endblock %}

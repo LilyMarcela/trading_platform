@@ -1,17 +1,28 @@
-# trading/urls.py (app-level)
+# trading/urls.py
 
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from .views import UserRegisterView
-from . import views
+from rest_framework.routers import DefaultRouter
+from .views import strategy_views, dashboard_views, user_views
+
+
+# Create DRF Router
+router = DefaultRouter()
+
+# Register ViewSets
+router.register(r'users', user_views.UserViewSet)
+router.register(r'strategies', strategy_views.StrategyViewSet)
+
+# Define URL patterns
 urlpatterns = [
-    path('strategies/<int:strategy_id>/', views.strategy_detail, name='strategy_detail'),
-    path('dashboard/', views.dashboard, name='dashboard'),  # Dashboard URL
-    path('register/', UserRegisterView.as_view(), name='register'),  # Registration URL
+    # Standard paths for user authentication and dashboard
+    path('dashboard/', dashboard_views.dashboard, name='dashboard'),  # Dashboard URL
     path('login/', auth_views.LoginView.as_view(template_name='trading/login.html'), name='login'),  # Login URL
     path('logout/', auth_views.LogoutView.as_view(template_name='trading/logout.html'), name='logout'),  # Logout URL
-    path('strategies/', views.strategy_list, name='strategy_list'),  # List strategies
-    path('strategies/create/', views.create_strategy, name='create_strategy'),
-    path('strategies/run/<int:strategy_id>/', views.run_strategy, name='run_strategy'),
+
+    # Custom route for running strategies
+
+    # Include router-generated routes (e.g., for strategies and accounts)
+    path('', include(router.urls)),
 
 ]

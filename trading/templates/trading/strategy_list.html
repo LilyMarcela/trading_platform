@@ -1,25 +1,34 @@
 <!-- trading/templates/trading/strategy_list.html -->
 
 {% extends "base_generic.html" %} {% block content %}
-<div class="container">
-  <h2>Your Strategies</h2>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for strategy in strategies %}
-      <tr>
-        <td>{{ strategy.name }}</td>
-        <td>{{ strategy.status }}</td>
-        <td></td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+<h2>Your Strategies</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Short Window</th>
+      <th>Long Window</th>
+      <th>Created At</th>
+      <th>Actions</th>
+      <!-- Add an Actions column -->
+    </tr>
+  </thead>
+  <tbody>
+    {% for strategy in strategies %}
+    <tr>
+      <td>{{ strategy.name }}</td>
+      <td>{{ strategy.short_window }}</td>
+      <td>{{ strategy.long_window }}</td>
+      <td>{{ strategy.created_at }}</td>
+      <td>
+        <!-- Add a button to run the strategy -->
+        <a href="{% url 'run_strategy' strategy.id %}" class="btn btn-primary"
+          >Run</a
+        >
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}

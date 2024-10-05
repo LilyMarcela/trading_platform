@@ -49,3 +49,12 @@ class StrategyForm(forms.ModelForm):
             'short_window': forms.NumberInput(attrs={'class': 'form-control'}),
             'long_window': forms.NumberInput(attrs={'class': 'form-control'}),
         }
+
+# trading/forms.py
+
+from django import forms
+from .models import Strategy
+
+# Form to run a strategy
+class RunStrategyForm(forms.Form):  # Using Form instead of ModelForm if you're selecting an existing strategy
+    strategy = forms.ModelChoiceField(queryset=Strategy.objects.all(), label="Select Strategy")

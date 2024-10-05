@@ -47,6 +47,8 @@ INSTALLED_APPS = [
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Default: database-backed sessions
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -42,9 +42,10 @@ class UserRegisterForm(UserCreationForm):
 class StrategyForm(forms.ModelForm):
     class Meta:
         model = Strategy
-        fields = ['name', 'description', 'status'] 
+        fields = ['name', 'description', 'short_window', 'long_window']  # Add more fields if needed
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
-            'status': forms.Select(attrs={'class': 'form-control'}),
+            'short_window': forms.NumberInput(attrs={'class': 'form-control'}),
+            'long_window': forms.NumberInput(attrs={'class': 'form-control'}),
         }

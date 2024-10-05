@@ -1,10 +1,9 @@
-<!-- trading/templates/trading/dashboard.html -->
+<!-- trading/templates/trading/run_strategy.html -->
 
 {% extends "base_generic.html" %} {% block content %}
 <div class="container">
-  <h2>Dashboard</h2>
+  <h2>Market Data for {{ strategy.name }}</h2>
 
-  <h3>Latest Market Data</h3>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -17,14 +16,14 @@
       </tr>
     </thead>
     <tbody>
-      {% for row in latest_market_data %}
+      {% for row in market_data %}
       <tr>
-        <td>{{ row['Date'] }}</td>
-        <td>{{ row['Open'] }}</td>
-        <td>{{ row['High'] }}</td>
-        <td>{{ row['Low'] }}</td>
-        <td>{{ row['Close'] }}</td>
-        <td>{{ row['Volume'] }}</td>
+        <td>{{ row.Date }}</td>
+        <td>{{ row.Open }}</td>
+        <td>{{ row.High }}</td>
+        <td>{{ row.Low }}</td>
+        <td>{{ row.Close }}</td>
+        <td>{{ row.Volume }}</td>
       </tr>
       {% endfor %}
     </tbody>

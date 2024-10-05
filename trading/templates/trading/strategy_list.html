@@ -16,18 +16,7 @@
       <tr>
         <td>{{ strategy.name }}</td>
         <td>{{ strategy.status }}</td>
-        <td>
-          <a
-            href="{% url 'edit_strategy' strategy.id %}"
-            class="btn btn-warning btn-sm"
-            >Edit</a
-          >
-          <a
-            href="{% url 'delete_strategy' strategy.id %}"
-            class="btn btn-danger btn-sm"
-            >Delete</a
-          >
-        </td>
+        <td></td>
       </tr>
       {% endfor %}
     </tbody>

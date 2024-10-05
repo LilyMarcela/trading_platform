@@ -9,6 +9,8 @@ class Strategy(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=(('active', 'Active'), ('paused', 'Paused'), ('completed', 'Completed'))) 
     created_at = models.DateTimeField(auto_now_add=True)
+    short_window = models.IntegerField(default=50)  # Short moving average window
+    long_window = models.IntegerField(default=200)
 
     def __str__(self) -> str:
         return super().__str__()

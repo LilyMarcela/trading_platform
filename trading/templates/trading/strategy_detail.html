@@ -1,0 +1,24 @@
+<!-- trading/templates/trading/strategy_detail.html -->
+
+{% extends "base_generic.html" %} {% block content %}
+<div class="container">
+  <h2>Strategy Details: {{ strategy.name }}</h2>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <strong>Description:</strong> {{ strategy.description }}
+    </li>
+    <li class="list-group-item">
+      <strong>Short Moving Average Window:</strong> {{ strategy.short_window }}
+    </li>
+    <li class="list-group-item">
+      <strong>Long Moving Average Window:</strong> {{ strategy.long_window }}
+    </li>
+    <li class="list-group-item">
+      <strong>Status:</strong> {{ strategy.status }}
+    </li>
+    <li class="list-group-item">
+      <strong>Created at:</strong> {{ strategy.created_at }}
+    </li>
+  </ul>
+</div>
+{% endblock %}

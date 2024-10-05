@@ -1,0 +1,36 @@
+<!-- trading/templates/trading/strategy_list.html -->
+
+{% extends "base_generic.html" %} {% block content %}
+<div class="container">
+  <h2>Your Strategies</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for strategy in strategies %}
+      <tr>
+        <td>{{ strategy.name }}</td>
+        <td>{{ strategy.status }}</td>
+        <td>
+          <a
+            href="{% url 'edit_strategy' strategy.id %}"
+            class="btn btn-warning btn-sm"
+            >Edit</a
+          >
+          <a
+            href="{% url 'delete_strategy' strategy.id %}"
+            class="btn btn-danger btn-sm"
+            >Delete</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

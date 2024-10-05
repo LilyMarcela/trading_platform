@@ -1,0 +1,11 @@
+<!-- trading/templates/trading/login.html -->
+{% extends "base_generic.html" %} {% block content %}
+<div class="container">
+  <h2>Login</h2>
+  <form method="POST">
+    {% csrf_token %} {{ form.as_p }}
+    <!-- This renders the login form -->
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+</div>
+{% endblock %}

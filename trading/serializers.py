@@ -1,7 +1,7 @@
 # trading/serializers.py
 
 from rest_framework import serializers
-from .models import  Strategy, Trade
+from .models import  Strategy, Trade, StrategyConfiguration
 from django.contrib.auth.models import User
 
 class UserSerializer(serializers.ModelSerializer):
@@ -38,19 +38,54 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
 
-
-
-# Serializer for the Strategy model
 class StrategySerializer(serializers.ModelSerializer):
+    # This will allow us to pass a list of configuration parameters when creating/updating a strategy
+    configurations = serializers.JSONField(write_only=True, required=False)
+    template_type = serializers.CharField(write_only=True, required=False)
+
+
     class Meta:
         model = Strategy
-        fields = ['id', 'name', 'short_window', 'long_window', 'user', 'created_at']
-        read_only_fields = ['user', 'created_at']  # Ensure user and created_at are read-only
+        fields = ['id', 'name', 'description', 'status', 'is_prebuilt', 'is_customizable', 'template_type', 'user', 'created_at', 'configurations']
+        read_only_fields = ['user', 'created_at']  # Ensure 'user' and 'created_at' are read-only fields
 
     def create(self, validated_data):
-        # You can add any custom logic here if needed when creating a strategy
-        return Strategy.objects.create(**validated_data)
+        # Extract configurations if present
+        configurations = validated_data.pop('configurations', None)
+        template_type = validated_data.pop('template_type', None)
 
+        
+        # Create the strategy instance
+        strategy = Strategy.objects.create(user=self.context['request'].user, **validated_data)
+
+        # If configurations were provided, save them to StrategyConfiguration
+        if configurations:
+            for param_name, param_value in configurations.items():
+                StrategyConfiguration.objects.create(strategy=strategy, parameter_name=param_name, parameter_value=param_value)
+
+        return strategy
+
+    def update(self, instance, validated_data):
+        # Extract configurations if present
+        configurations = validated_data.pop('configurations', None)
+
+        # Update strategy fields
+        instance.name = validated_data.get('name', instance.name)
+        instance.description = validated_data.get('description', instance.description)
+        instance.status = validated_data.get('status', instance.status)
+        instance.is_prebuilt = validated_data.get('is_prebuilt', instance.is_prebuilt)
+        instance.is_customizable = validated_data.get('is_customizable', instance.is_customizable)
+        instance.template_type = validated_data.get('template_type', instance.template_type)
+        instance.save()
+
+        # If configurations were provided, update the StrategyConfiguration model
+        if configurations:
+            # Clear existing configurations (if desired) and replace with the new ones
+            StrategyConfiguration.objects.filter(strategy=instance).delete()  # Optional: remove if you want to keep existing ones
+            for param_name, param_value in configurations.items():
+                StrategyConfiguration.objects.create(strategy=instance, parameter_name=param_name, parameter_value=param_value)
+
+        return instance
 
 # Serializer for the Trade model
 class TradeSerializer(serializers.ModelSerializer):

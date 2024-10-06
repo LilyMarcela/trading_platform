@@ -38,20 +38,6 @@ class UserRegisterForm(UserCreationForm):
 
 # trading/forms.py
 
-
-class StrategyForm(forms.ModelForm):
-    class Meta:
-        model = Strategy
-        fields = ['name', 'description', 'short_window', 'long_window']  # Add more fields if needed
-        widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-control'}),
-            'short_window': forms.NumberInput(attrs={'class': 'form-control'}),
-            'long_window': forms.NumberInput(attrs={'class': 'form-control'}),
-        }
-
-# trading/forms.py
-
 from django import forms
 from .models import Strategy
 
